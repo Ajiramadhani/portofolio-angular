@@ -1,0 +1,17 @@
+<h1>{{ title }}</h1>
+<div *ngFor="let category of categories">
+    <!-- <div *ngIF="let category; else 'Kosong'"> -->
+    <ng-container *ngIf="category.name">
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>{{ category.name }}</mat-card-title>
+                <mat-card-subtitle>{{ category.link }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+                <!-- <button mat-button [routerLink]="[{category.link}]">Link Here</button> -->
+                <button mat-button [routerLink]="" (click)="handleClick(category.name)" target="_blank" rel="noopener noreferrer">Click Here</button>
+            </mat-card-actions>
+        </mat-card>
+        <br>
+    </ng-container>
+</div>

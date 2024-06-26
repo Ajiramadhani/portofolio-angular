@@ -1,0 +1,15 @@
+WorkFlow Angular
+
+npm install -g @angular/cli@17
+
+ng version
+
+ng new [file-project]
+
+SSR/SSG => Yes
+
+ng add @angular/material
+
+ng serve
+
+ng g --help => cek generate list
