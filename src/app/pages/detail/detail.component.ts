@@ -1,8 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import { DetailService } from './detail.service';
+import { Detail } from '../../model/detail.interface';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { GetNews } from '../../model/news.interface';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail',
@@ -11,31 +18,80 @@ import {MatCardModule} from '@angular/material/card';
     CommonModule,
     HttpClientModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    HeaderComponent,
+    MatIconModule,
+    RouterModule,
+    
   ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.css'
 })
-export class DetailComponent {
-  title = 'Detail Berita';
-  details:any[] = [];
 
-  constructor(private http: HttpClient){
-    this.fetchDetails();
+// Bisa Jalan
+// export class DetailComponent {
+//   title = 'Detail Berita';
+//   constructor(private detailService: DetailService) {}
+
+//   news: Detail[] = [];
+
+//   ngOnInit(): void {
+//     this.loadNews();
+//   }
+
+//   loadNews(){
+//     this.detailService.getBeritas().subscribe(resp => {
+//       console.log(resp);
+//       this.news = resp.posts;
+      
+//     })
+//   }
+// }
+
+// export class DetailComponent {
+//   title = 'Detail Berita';
+//   name: string | null = '';
+//   constructor(private route: ActivatedRoute, private detailService: DetailService) {}
+
+//   news: Detail[] = [];
+
+//   ngOnInit(): void {
+//     this.route.paramMap.subscribe(params => {
+//       this.name = params.get('name');
+//       this.loadNews();
+//     })
+//   }
+
+//   loadNews(){
+//     this.detailService.getBeritas().subscribe(resp => {
+//       console.log(resp);
+//       this.news = resp.posts;
+      
+//     })
+//   }
+// }
+
+export class DetailComponent implements OnInit {
+  title: string | null = 'Detail JakPost';
+  slug: string | null = '';
+  news: Detail[] = [];
+
+  constructor(private route: ActivatedRoute, private detailService: DetailService) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.slug = params.get('slug');
+      this.loadDetail();
+    });
   }
 
-  fetchDetails() {
-    const apiUrl = 'https://jakpost.vercel.app/api/category/indonesia';
-    this.http.get<any>(apiUrl).subscribe(
-      (data) => {
-        this.details = data.post;
-        console.log(data.post);
+  loadDetail() {
+    if (this.slug) {
+      this.detailService.getBeritas(this.slug).subscribe(data => {
+        console.log(data.posts);
         
-      },
-      (error) => {
-        console.error('Error fetching data', error);
-      }
-    );
+        this.news = data.posts;
+      });
+    }
   }
-
 }

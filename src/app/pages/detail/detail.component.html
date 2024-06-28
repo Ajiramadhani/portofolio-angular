@@ -1,20 +1,35 @@
-<p>detail works!</p>
-<mat-card class="example-card" appearance="outlined">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+<app-header></app-header>
+<h1>{{ title }}</h1>
+<button [routerLink]="['/berita']" class="btn btn-sm btn-info">
+  <mat-icon>arrow_back_ios</mat-icon>Back
+</button>
+
+<div class="container">
+  <div class="row d-flex row-cols-3 justify-content-around">
+
+    <mat-card class="example-card card mb-3 my-3" *ngFor="let item of news" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-subtitle>{{ item.category }} | {{ item.pusblised_at }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{item.image}}" alt="Photo of a Shiba Inu" loading="lazy">
+      <mat-card-content>
+        <p>
+          {{item.headline}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>
+          <mat-icon>favorite</mat-icon>
+          LIKE
+        </button>
+        <button mat-button>
+          <mat-icon>share</mat-icon>
+          SHARE
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>
